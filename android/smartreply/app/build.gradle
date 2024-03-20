@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.google.mlkit.samples.nl.smartreply"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary true
@@ -15,6 +14,13 @@ android {
         setProperty("archivesBaseName", "nl-smartreply")
     }
     buildTypes {
+        proguard {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard.cfg'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro', 'proguard.cfg'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -26,6 +32,9 @@ android {
     }
     aaptOptions {
         noCompress 'tflite'
+    }
+    lintOptions {
+        disable "Instantiatable"
     }
 }
 
@@ -39,7 +48,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    implementation 'com.google.mlkit:smart-reply:17.0.2'
+    implementation 'com.google.mlkit:smart-reply:17.0.3'
     // Or comment the dependency above and uncomment the dependency below to
     // use unbundled model that depends on Google Play Services
     // implementation 'com.google.android.gms:play-services-mlkit-smart-reply:16.0.0-beta1'
